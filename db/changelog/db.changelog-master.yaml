@@ -1,0 +1,78 @@
+databaseChangeLog:
+  - changeSet:
+      id: "1"
+      author: "your_name"
+      changes:
+        - createTable:
+            tableName: "rooms"
+            columns:
+              - column:
+                  name: "id"
+                  type: "serial"
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: "name"
+                  type: "varchar(255)"
+              - column:
+                  name: "capacity"
+                  type: "int"
+
+  - changeSet:
+      id: "2"
+      author: "your_name"
+      changes:
+        - createTable:
+            tableName: "slots"
+            columns:
+              - column:
+                  name: "id"
+                  type: "serial"
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: "room_id"
+                  type: "int"
+                  constraints:
+                    foreignKeyName: "fk_room_slot"
+                    references: "rooms(id)"
+              - column:
+                  name: "start_time"
+                  type: "timestamp"
+              - column:
+                  name: "end_time"
+                  type: "timestamp"
+
+  - changeSet:
+      id: "3"
+      author: "your_name"
+      changes:
+        - createTable:
+            tableName: "bookings"
+            columns:
+              - column:
+                  name: "id"
+                  type: "serial"
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: "room_id"
+                  type: "int"
+                  constraints:
+                    foreignKeyName: "fk_room_booking"
+                    references: "rooms(id)"
+              - column:
+                  name: "slot_id"
+                  type: "int"
+                  constraints:
+                    foreignKeyName: "fk_slot_booking"
+                    references: "slots(id)"
+              - column:
+                  name: "emails"
+                  type: "varchar(255)"
+              - column:
+                  name: "comment"
+                  type: "text"
